@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SIBI</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  <!-- Custom styles for this template -->
+  <link href="css/landing-page.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">SIBI</a>
+        <button class="btn btn-primary " type="button" id="dropdownMenuButton"   href="#" data-toggle="modal" data-target="#Login">
+          Ingresar
+        </button>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+
+  <div class="row" style="padding:5%;">
+    <div class="col-12">
+      <table id="example" class="display" style="width:100%">
+      <thead>
+          <tr>
+              <th>ISBN</th>
+              <th>NOMBRE</th>
+              <th>AUTOR</th>
+              <th>EXISTENCIA</th>
+              <th>ESPACIO</th>
+              <th>PUBLICACION</th>
+          </tr>
+      </thead>
+      <tfoot>
+          <tr>
+            <th>ISBN</th>
+            <th>NOMBRE</th>
+            <th>AUTOR</th>
+            <th>EXISTENCIA</th>
+            <th>ESPACIO</th>
+            <th>PUBLICACION</th>
+          </tr>
+      </tfoot>
+      </table>
+    </div>
+  </div>
+
+
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <p class="text-muted small mb-4 mb-lg-0">&copy; SIBI 2019. All Rights Reserved.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-facebook fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/globalvarfun.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+
+
+
+$(document).ready(function(){
+
+  var book = null;
+  var url_string = window.location.href; //
+  var url = new URL(url_string);
+  book = url.searchParams.get("book");
+
+if (book == null) {
+    book = "";
+}
+
+  $.ajax({
+    type : 'POST',
+    url  : 'php/getbooks.php',
+    dataType: 'json',
+    cache: false,
+    success :  function(result)
+        {
+            $('#example').DataTable({
+              language:languageesp,
+              "data": result,
+              columns: [
+                { "data": "ISBN" },
+                { "data": "Title" },
+                { "data": "Authors" },
+                { "data": "Quantity" },
+                { "data": "Slot" },
+                { "data": "PubDate" }
+              ],
+               "oSearch": {"sSearch": book }
+            });
+        }
+    });
+});
+
+function Login() {
+
+  var param = {
+      "user" : $("#User").val(),
+      "pass" : $("#passwordlogin").val()
+          };
+
+  $.ajax({
+        data:  param, //datos que se envian a traves de ajax
+        url:   'php/checkuser.php', //archivo que recibe la peticion
+        type:  'post', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                      if (Number(response) == true) {
+                        window.location.href = 'login.php?usr='+param["user"]+"&pass="+param["pass"];
+                      }else {
+                        alert("Error en el login.");
+                      }
+                    }
+        });
+}
+
+</script>
+
+
+  <div id="Login" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="LoginModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+         <div class="input-group col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="label9">Usuario</span>
+              </div>
+              <input id="User" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" >
+            </div>
+        </div>
+        <div class="input-group col-12">
+           <div class="input-group mb-3">
+             <div class="input-group-prepend">
+               <span class="input-group-text" id="label10">Contraseña</span>
+             </div>
+             <input id="passwordlogin" type="password" class="form-control" placeholder="" aria-label="" aria-describedby="label10" >
+           </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="Login()">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

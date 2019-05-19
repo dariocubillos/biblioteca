@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SIBI</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="css/landing-page.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">SIBI</a>
+
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ingresar o Registrarte
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Login">Ingresar</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Register">Registrame </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">Busca la disponibilidad de tus libros aqui</h1>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <form>
+            <div class="form-row">
+              <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <input type="text" class="form-control form-control-lg" placeholder="Ingresa tu libro aqui...." id="bookfind">
+              </div>
+              <div class="col-12 col-md-3">
+                <button type="button" class="btn btn-block btn-lg btn-primary" onclick="gotofind()">Buscar!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Icons Grid -->
+  <section class="features-icons bg-light text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-screen-desktop m-auto text-primary"></i>
+            </div>
+            <h3>Buscar Informacion</h3>
+            <p class="lead mb-0">Comprueba la disponibilidad !</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-layers m-auto text-primary"></i>
+            </div>
+            <h3>Aparta tus libros</h3>
+            <p class="lead mb-0">Aparta rapidamente!</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-check m-auto text-primary"></i>
+            </div>
+            <h3>Y facil de usar</h3>
+            <p class="lead mb-0">Una experiencia amigable!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Showcases -->
+  <section class="showcase">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/computer.png');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>1. Registrate</h2>
+          <p class="lead mb-0">Ingresa tus datos para poder apartar tus libros</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/search.png');"></div>
+        <div class="col-lg-6 my-auto showcase-text">
+          <h2>2. Consulta la disponibilidad</h2>
+          <p class="lead mb-0">Con un Buscador muy intuitivo podras ver rapidamente toda la informacion!</p>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/click.png');"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>3. Aparta con un click</h2>
+          <p class="lead mb-0">Apartalo si esta disponible y disfruta de tu libro facil y rapido!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials text-center bg-light">
+    <div class="container">
+      <h2 class="mb-5">Tienes dudas? ... Consulta mas informacion con el bibliotecario</h2>
+      <div class="row">
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-4">
+          <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+            <img class="img-fluid rounded-circle mb-3" src="img/user.png" alt="">
+            <h5>Encargado</h5>
+            <p class="font-weight-light mb-0">"Estoy a tu servicio para las dudas que tengas acerca de la plataforma."</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="call-to-action text-white text-center">
+    <div class="overlay"></div>
+    <div class="c ontainer">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h2 class="mb-4">Listo para registrarte? Hazlo ahora!</h2>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <form>
+            <div class="form-row">
+             <div class="col-12 col-md-12 mb-2 mb-md-0">
+            <button type="button" class="btn btn-block btn-lg btn-primary" data-toggle="modal" data-target="#Register">Registrame!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <p class="text-muted small mb-4 mb-lg-0">&copy; SIBI 2019. All Rights Reserved.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-facebook fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+  function gotofind() {
+  var find = $("#bookfind").val()
+  window.location.href = 'search.html?book='+find;
+  }
+
+function Login() {
+  var param = {
+      "user" : $("#User").val(),
+      "pass" : $("#passwordlogin").val()
+          };
+
+  $.ajax({
+        data:  param, //datos que se envian a traves de ajax
+        url:   'php/checkuser.php', //archivo que recibe la peticion
+        type:  'post', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                      if (Number(response) == true) {
+
+                        if (param["user"] =="ADMIN") {
+                          window.location.href ='admin.php?usr='+param["user"]+"&pass="+param["pass"];
+                        }
+                        else {
+                          window.location.href ='user.php?usr='+param["user"]+"&pass="+param["pass"];
+                        }
+
+                      }else {
+                        alert("Error en el login.");
+                      }
+                    }
+        });
+  }
+
+function RegisterMe() {
+
+if (($("#password").val() == $("#passwordconfirm").val())&& ($("#password").val() != "") && ($("#passwordconfirm").val() != "")) {
+
+if ($("#CURP").val() != "" && $("#nombre").val() != "" && $("#apellidos").val() != "" && $("#email").val() != "" && $("#tel").val() != "" && $("#dir").val() != "" && $("#password").val() != "" ) {
+
+  var param = {
+      "CURP" : $("#CURP").val(),
+      "Nombre" : $("#nombre").val(),
+      "Apellidos" : $("#apellidos").val(),
+      "Email" : $("#email").val(),
+      "Telefono" : Number($("#tel").val()),
+      "Direccion" : $("#dir").val(),
+      "Pass" : $("#password").val(),
+
+          };
+
+  $.ajax({
+        data:  param, //datos que se envian a traves de ajax
+        url:   'php/registeruser.php', //archivo que recibe la peticion
+        type:  'post', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                      if (Number(response) == true) {
+                        alert("El usuario fue registrado correctamente.");
+                      }else {
+                        alert("Error en el registro.");
+                      }
+                    }
+        });
+
+}else {
+
+  alert("Todos los campos son obligatorios debes llenarlos");
+
+}
+
+
+
+}else {
+  alert("Las contraseñas no son iguales ni estar vacias o falta rellenar algun campo.");
+}
+
+
+}
+
+</script>
+
+  <div id="Register" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="input-group col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="label0">CURP</span>
+                </div>
+                <input id="CURP" type="text" class="form-control" placeholder="" aria-label="CURP" aria-describedby="label0">
+              </div>
+          </div>
+        </div>
+          <div class="row">
+           <div class="input-group col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="label1">Nombre</span>
+                </div>
+                <input id="nombre" type="text" class="form-control" placeholder="" aria-label="Nombre Completo" aria-describedby="label1">
+              </div>
+          </div>
+          <div class="input-group col-6">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <span class="input-group-text" id="label2">Apellidos</span>
+               </div>
+               <input id="apellidos" type="text" class="form-control" placeholder="" aria-label="Apellidos" aria-describedby="label2">
+             </div>
+         </div>
+        </div>
+        <div class="row">
+          <div class="input-group col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="labe15">E-mail</span>
+              </div>
+              <input id="email" type="email" class="form-control" placeholder="" aria-label="email" aria-describedby="labe15">
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="labe16">Telefono</span>
+            </div>
+            <input id="tel" type="number" class="form-control" placeholder="" aria-label="tel" aria-describedby="labe16">
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-group col-12">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="labe17">Direccion</span>
+          </div>
+          <input id="dir" type="text" class="form-control" placeholder="" aria-label="dir" aria-describedby="labe17">
+        </div>
+    </div>
+  </div>
+        <div class="row">
+         <div class="input-group col-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="label6">Contraseña</span>
+              </div>
+              <input id="password" type="password" class="form-control" placeholder="" aria-label="password" aria-describedby="label6" >
+            </div>
+        </div>
+        <div class="input-group col-6">
+           <div class="input-group mb-3">
+             <div class="input-group-prepend">
+               <span class="input-group-text" id="label7">Confirmar Contraseña</span>
+             </div>
+             <input id="passwordconfirm" type="password" class="form-control" placeholder="" aria-label="passwordconfirm" aria-describedby="label7" >
+           </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="RegisterMe()" >Registrarme</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div id="Login" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="LoginModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+         <div class="input-group col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="label9">Usuario</span>
+              </div>
+              <input id="User" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" >
+            </div>
+        </div>
+        <div class="input-group col-12">
+           <div class="input-group mb-3">
+             <div class="input-group-prepend">
+               <span class="input-group-text" id="label10">Contraseña</span>
+             </div>
+             <input id="passwordlogin" type="password" class="form-control" placeholder="" aria-label="" aria-describedby="label10" >
+           </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="Login()">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
