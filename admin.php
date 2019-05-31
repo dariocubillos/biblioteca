@@ -37,6 +37,7 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addbook">Añadir Libro</a>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changepass">Cambiar Contraseña</a>
+        <a class="dropdown-item" href="#" data-target="#" onclick="backbupdb()">Respaldar DB</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" onclick="exit()">Salir</a>
       </div>
@@ -247,6 +248,36 @@
 
   });
 
+
+function backbupdb() {
+
+  $.ajax({
+        url:   'php/backupdb.php', //archivo que recibe la peticion
+        type:  'post', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                      if (Number(response) == true) {
+                        alert("Respaldo creado en la carpeta respaldos.");
+                        location.reload();
+                      }
+            }
+         });
+
+}
+
+function restoredb() {
+  $.ajax({
+        url:   'php/restoredb.php', //archivo que recibe la peticion
+        type:  'post', //método de envio
+        success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                      if (Number(response) == true) {
+                        alert("Ultimo respaldo recuperado.");
+                        location.reload();
+                      }else {
+                        alert("Ocurrio un error al recuperar el respaldo");
+                      }
+            }
+         });
+}
 
   function pass() {
     if ($("#newpassword").val() == $("#newpassword0").val()) {
