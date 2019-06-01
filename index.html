@@ -197,6 +197,26 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
+
+$( document ).ready(function() {
+
+  var userid = document.getElementById("User");
+  var passid = document.getElementById("passwordlogin");
+
+  userid.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      Login();
+    }
+  });
+
+  passid.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      Login();
+    }
+  });
+
+});
+
   function gotofind() {
   var find = $("#bookfind").val()
   window.location.href = 'search.html?book='+find;

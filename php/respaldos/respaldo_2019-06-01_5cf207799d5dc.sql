@@ -86,7 +86,7 @@ CREATE TABLE `users` (
 
 
 INSERT INTO users VALUES
-("ADMIN","ADMIN","ADMIN","","0","","ADMINADMIN"),
+("ADMIN","ADMIN","ADMIN","","0","","ADMIN"),
 ("1234567890","Juan","Perez","juanperez@gmail.com","123456789","calle","LINUX");
 
 
