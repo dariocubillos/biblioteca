@@ -662,6 +662,5 @@ function deleteuser(selected) {
   </div>
 </div>
 </div>
-
 </body>
 </html>
