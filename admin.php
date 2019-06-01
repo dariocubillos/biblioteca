@@ -18,6 +18,10 @@
   <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
   <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+  <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+  <link href="css/fixedHeader.bootstrap4.min.css" rel="stylesheet" type="text/css">
+  <link href="css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+
   <!-- Custom styles for this template -->
   <link href="css/landing-page.css" rel="stylesheet">
   <script src="js/globalvarfun.js"></script>
@@ -25,6 +29,22 @@
 </head>
 
 <body>
+
+<style media="screen">
+
+.btn-block {
+    padding: 3em 0;
+}
+.mainmenubutton{
+  padding: 1.3%;
+}
+
+.modal-ku {
+  width: 1750px;
+  margin: auto;
+}
+
+</style>
 
   <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
@@ -35,9 +55,7 @@
         Opciones
       </button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addbook">Añadir Libro</a>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changepass">Cambiar Contraseña</a>
-        <a class="dropdown-item" href="#" data-target="#" onclick="backbupdb()">Respaldar DB</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" onclick="exit()">Salir</a>
       </div>
@@ -72,8 +90,7 @@
 
 
    ?>
-
-
+<!--
    <div id="accordion">
      <div class="card">
        <div class="card-header" id="headingOne">
@@ -151,6 +168,7 @@
         </div>
       </div>
     </div>
+
   </div>
      <div class="card">
        <div class="card-header" id="headingThree">
@@ -197,9 +215,35 @@
        </div>
      </div>
    </div>
+-->
+<br>
+<div class="mainmenubutton">
+<div class="row">
+  <div class="col-md-4 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" href="#" data-toggle="modal" data-target="#addbook" >Añadir Libros <i class="fa fa-book" aria-hidden="true"></i></button>
+  </div>
+  <div class="col-md-4 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#prestamoslibrosmodal">Prestar Libros <i class="fa fa-check" aria-hidden="true"></i></button>
+  </div>
+  <div class="col-md-4 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#alumnosmodal">Usuarios <i class="fa fa-users" aria-hidden="true"></i></button>
+  </div>
+</div>
+<br>
+<div class="row">
+<!--  <div class="col-md-4 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#reportesmodal">Reportes <i class="fa fa-file" aria-hidden="true"></i></button>
+  </div> -->
+  <div class="col-md-6 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="backbupdb()">Respaldar DB <i class="fa fa-database" aria-hidden="true"></i></button>
+  </div>
+  <div class="col-md-6 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#pendientesmodal">Prestamos Pendientes  <i class="fa fa-eye" aria-hidden="true"></i></button>
+  </div>
+</div>
+</div>
 
-
-
+<br>
 
   <!-- Footer -->
   <footer class="footer bg-light">
@@ -229,10 +273,18 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/dataTables.fixedHeader.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/pdfmake.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/vfs_fonts.js"></script>
+  <script type="text/javascript" charset="utf8" src="js/buttons.html5.min.js"></script>
 
   <script type="text/javascript">
 
     var slecttoconfig;
+    var d = new Date();
+    var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
 
     $(document).ready(function(){
   	var uri = window.location.toString();
@@ -247,6 +299,41 @@
 
 
   });
+
+
+  function getuserdata(selected) {
+
+    var usr = selected.parentNode.parentElement.children[0].textContent;     // Gets a descendent with class="nr" .text();         // Retrieves the text within <td>;
+
+    var param = {
+        "user" : usr,
+            };
+
+            $.ajax({
+              data:  param,
+              type : 'POST',
+              url  : 'php/getuserdata.php',
+              dataType: 'json',
+              cache: false,
+              success :  function(result)
+                  {
+                  $("#Nombre").val(result[0]["Name"]);
+                  $("#Apellidos").val(result[0]["LastName"]);
+                  $("#Email").val(result[0]["Email"]);
+                  $("#Tel").val(result[0]["Tel"]);
+                  $("#Direccion").val(result[0]["Addres"]);
+                  }
+              });
+
+  }
+
+
+
+  function SaveCred() {
+    html2canvas(document.querySelector("#areaprint")).then(canvas => {
+        saveAs(canvas.toDataURL(), 'Credencial.png');
+      });
+  }
 
 
 function backbupdb() {
@@ -322,6 +409,14 @@ function restoredb() {
       success :  function(result)
           {
            $('#example').DataTable({
+             dom: 'Bfrtip',
+         buttons: [
+             {
+                 extend: 'pdfHtml5',
+                 messageTop: 'Reporte libros en existencia a la fecha : '+strDate
+             }
+         ],
+                   fixedHeader: true,
                   language:languageesp,
                   "data": result,
                   columns: [
@@ -329,8 +424,6 @@ function restoredb() {
                     { "data": "Title" },
                     { "data": "Authors" },
                     { "data": "Quantity" },
-                    { "data": "Slot" },
-                    { "data": "PubDate" },
                     {"defaultContent": "<button onclick='getitem(this)'>Modificar</button>"},
                     {"defaultContent": "<button onclick='bookback(this)' data-toggle='modal' data-target='#backmodal'>Devolución</button>"}
                   ],
@@ -350,14 +443,22 @@ function ReloadTablePrestamos() {
     success :  function(result)
         {
          $('#tableprestamos').DataTable({
+           dom: 'Bfrtip',
+       buttons: [
+           {
+               extend: 'pdfHtml5',
+               messageTop: 'Reporte de prestamos a la fecha: '+strDate
+           }
+       ],
                 language:languageesp,
                 "data": result,
                 columns: [
+                  { "data": "Nombre" },
+                  { "data": "Apellidos" },
                   { "data": "fkbook" },
                   { "data": "fkuser" },
                   { "data": "date" },
                   { "data": "estate" }
-
                 ],
               });
         }
@@ -373,6 +474,13 @@ function ReloadTableUsers() {
     success :  function(result)
         {
          $('#userstable').DataTable({
+           dom: 'Bfrtip',
+       buttons: [
+           {
+               extend: 'pdfHtml5',
+               messageTop: 'Reporte de usuarios a la fecha : '+strDate
+           }
+       ],
                 language:languageesp,
                 "data": result,
                 columns: [
@@ -383,7 +491,8 @@ function ReloadTableUsers() {
                   { "data": "Tel" },
                   { "data": "Addres" },
                   { "data": "Pass" },
-                  {"defaultContent": "<button onclick='deleteuser(this)'>Eliminar</button>"}
+                  {"defaultContent": "<button onclick='deleteuser(this)'>Eliminar</button>"},
+                  {"defaultContent": "<button onclick='getuserdata(this)' data-toggle='modal' data-target='#Credencial'>Credencial</button>"}
                 ],
               });
         }
@@ -502,7 +611,288 @@ function deleteuser(selected) {
   }
 
 
+
+
 </script>
+
+<!--
+<div id="prestamoslibrosmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Prestamo de Libros</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+-->
+
+<div id="reportesmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Reportes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div id="pendientesmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Libros Pendientes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table id="tableprestamos" class="display" style="width:100%">
+          <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                  <th>ISBN</th>
+                  <th>USER</th>
+                  <th>FECHA</th>
+                  <th>Estado</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>ISBN</th>
+                <th>USER</th>
+                <th>FECHA</th>
+                <th>Estado</th>
+              </tr>
+          </tfoot>
+          </table>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div id="Credencial" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="z-index:10000000000000">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Credencial</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="areaprint">
+        <div class="row">
+            <div class="col-md-10" style="padding-left:9em;">
+                <div style="text-align: center;">
+                    <h3>Nombre de la escuela</h3>
+                    <h5>Credencial de biblioteca</h5>
+                </div>
+            </div>
+            <div class="col-md-2">
+              <img src="img\escudoescuela.png" height="100" width="100" crossorigin>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">Nombre</span>
+                 </div>
+                 <input id="Nombre" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">Apellidos</span>
+                 </div>
+                 <input id="Apellidos" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">E-mail</span>
+                 </div>
+                 <input id="Email" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">Telefono</span>
+                 </div>
+                 <input id="Tel" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">Direccion</span>
+                 </div>
+                 <input id="Direccion" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+            <input id="Firma" type="text" class="form-control" placeholder="Firma del Bibliotecario" aria-label="" aria-describedby="label9" readonly="true" style="text-align:center;">
+          </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary  " onclick="SaveCred()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<div id="alumnosmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 1166px !important;">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Usuarios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+
+        <table id="userstable" class="table table-striped table-bordered" style="width:20%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+                <th>Contraseña</th>
+                <th>Borrar</th>
+                <th>Credencial</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Email</th>
+              <th>Telefono</th>
+              <th>Direccion</th>
+              <th>Contraseña</th>
+              <th>Borrar</th>
+              <th>Credencial</th>
+            </tr>
+        </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<div id="prestamoslibrosmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="width: 105%;">
+        <div class="modal-header">
+        <h5 class="modal-title" id="LabelApartados">Prestamo de Libros</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<div class="table-responsive">
+  <table id="example" class="table table-striped table-bordered" style="width:20%;">
+  <thead>
+      <tr>
+          <th>ISBN</th>
+          <th>NOMBRE</th>
+          <th>AUTOR</th>
+          <th>EXISTENCIA</th>
+          <th>MODIFICAR</th>
+          <th>DEVOLVER</th>
+      </tr>
+  </thead>
+  <tfoot>
+      <tr>
+        <th>ISBN</th>
+        <th>NOMBRE</th>
+        <th>AUTOR</th>
+        <th>EXISTENCIA</th>
+        <th>MODIFICAR</th>
+        <th>DEVOLVER</th>
+      </tr>
+  </tfoot>
+  </table>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 
 
 <div id="changepass" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
