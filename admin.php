@@ -480,7 +480,7 @@ function ReloadTableUsers() {
                extend: 'pdfHtml5',
                messageTop: 'Reporte de usuarios a la fecha : '+strDate
            }
-       ],
+       ], fixedHeader: true,
                 language:languageesp,
                 "data": result,
                 columns: [
