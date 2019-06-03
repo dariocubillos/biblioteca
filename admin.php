@@ -279,6 +279,7 @@
   <script type="text/javascript" charset="utf8" src="js/pdfmake.min.js"></script>
   <script type="text/javascript" charset="utf8" src="js/vfs_fonts.js"></script>
   <script type="text/javascript" charset="utf8" src="js/buttons.html5.min.js"></script>
+  <script src="node_modules/html2canvas/dist/html2canvas.js"></script>
 
   <script type="text/javascript">
 
