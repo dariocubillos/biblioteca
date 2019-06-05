@@ -81,7 +81,17 @@ return($result);
 function RegisterBook($Isbn,$Titulo,$Autor,$Existencia,$Lugar,$Paginas,$Precio,$Publicacion)
 {
   // code...
-$result = $this->conn->query("INSERT INTO `books` (`ISBN`, `Title`, `Authors`, `Quantity`, `Slot`,  `Pages`, `Price`, `PubDate`) VALUES ('$Isbn','$Titulo','$Autor','$Existencia','$Lugar','$Paginas','$Precio','$Publicacion')");
+  $resultlibros = $this->conn->query("SELECT * from `books` WHERE ISBN = '$Isbn'");
+
+if ($resultlibros->num_rows == 0) {
+  // code...
+  $result = $this->conn->query("INSERT INTO `books` (`ISBN`, `Title`, `Authors`, `Quantity`, `Slot`,  `Pages`, `Price`, `PubDate`) VALUES ('$Isbn','$Titulo','$Autor','$Existencia','$Lugar','$Paginas','$Precio','$Publicacion')");
+}else {
+  // code...
+  $result = 3;
+}
+
+
 return($result);
 }
 

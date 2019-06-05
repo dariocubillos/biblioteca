@@ -223,7 +223,7 @@
     <button type="button" class="btn btn-primary btn-lg btn-block" href="#" data-toggle="modal" data-target="#addbook" >Añadir Libros <i class="fa fa-book" aria-hidden="true"></i></button>
   </div>
   <div class="col-md-4 text-center">
-    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#prestamoslibrosmodal">Prestar Libros <i class="fa fa-check" aria-hidden="true"></i></button>
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#prestamoslibrosmodal">Prestamos y Libros <i class="fa fa-check" aria-hidden="true"></i></button>
   </div>
   <div class="col-md-4 text-center">
     <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#alumnosmodal">Usuarios <i class="fa fa-users" aria-hidden="true"></i></button>
@@ -231,8 +231,8 @@
 </div>
 <br>
 <div class="row">
-<!--  <div class="col-md-4 text-center">
-    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#reportesmodal">Reportes <i class="fa fa-file" aria-hidden="true"></i></button>
+<!-- <div class="col-md-4 text-center">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#PrestamoDirectoModal">Prestar a Usuario <i class="fa fa-address-book" aria-hidden="true"></i></button>
   </div> -->
   <div class="col-md-6 text-center">
     <button type="button" class="btn btn-primary btn-lg btn-block" onclick="backbupdb()">Respaldar DB <i class="fa fa-database" aria-hidden="true"></i></button>
@@ -286,6 +286,7 @@
     var slecttoconfig;
     var d = new Date();
     var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+    var selectbookdirpress;
 
     $(document).ready(function(){
   	var uri = window.location.toString();
@@ -426,7 +427,8 @@ function restoredb() {
                     { "data": "Authors" },
                     { "data": "Quantity" },
                     {"defaultContent": "<button onclick='getitem(this)'>Modificar</button>"},
-                    {"defaultContent": "<button onclick='bookback(this)' data-toggle='modal' data-target='#backmodal'>Devolución</button>"}
+                    {"defaultContent": "<button onclick='bookback(this)' data-toggle='modal' data-target='#backmodal'>Devolución</button>"},
+                    {"defaultContent": "<button onclick='bookpres(this)' data-toggle='modal' data-target='#PrestamoDirectoModal'>Prestar</button>"}
                   ],
                 });
 
@@ -506,9 +508,62 @@ function ReloadTableUsers() {
   }
 
   function bookback(selected) {
-  slecttoconfig = selected.parentNode.parentElement.children[0].textContent;     // Gets a descendent with class="nr" .text();         // Retrieves the text within <td>
+    slecttoconfig = selected.parentNode.parentElement.children[0].textContent;     // Gets a descendent with class="nr" .text();         // Retrieves the text within <td>
     // window.location.href ='bookback.php?ISBN='+slecttoconfig;
   }
+
+
+    function bookpres(selected) {
+    selectbookdirpress = selected.parentNode.parentElement.children[0].textContent;
+    selectnumberbook = selected.parentNode.parentElement.children[3].textContent;
+      $("#ISBNdir").val(selectbookdirpress);
+    }
+
+function PrestarLibro() {
+
+if ($("#ISBNdir").val() != "" && $("#CURPUserdir").val() != "") {
+
+  if (Number(selectnumberbook) > 0) {
+
+    var param = {
+        "ISBN" : $("#ISBNdir").val(),
+        "usr" :$("#CURPUserdir").val()
+            };
+
+    $.ajax({
+          data:  param, //datos que se envian a traves de ajax
+          url:   'php/uniquecheck.php', //archivo que recibe la peticion
+          type:  'post', //método de envio
+          success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                        if (Number(response) == false) {
+                            $.ajax({
+                                  data:  param, //datos que se envian a traves de ajax
+                                  url:   'php/apart.php', //archivo que recibe la peticion
+                                  type:  'post', //método de envio
+                                  success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+                                                if (Number(response) == true) {
+                                                  alert("Apartado correcto.");
+                                                  location.reload();
+                                                }else {
+                                                  alert("Error en el apartado.");
+                                                }
+                                              }
+
+                           });
+
+                        }else {
+                          alert("Ya has apartado un ejemplar de este libro para el usuario.");
+                        }
+                      }
+   });
+  }else {
+    alert("No hay libros disponibles de este ejemplar espera a que regrese uno.");
+  }
+}else {
+  alert("Rellene los campos en el formulario.");
+}
+
+}
 
 function backbook() {
 var usrback = $("#CURPBack").val();
@@ -596,6 +651,8 @@ function deleteuser(selected) {
                     if (Number(response) == true) {
                       alert("Libro Añadido correctamente.");
                       location.reload();
+                    }else if (Number(response) == 3) {
+                      alert("ISBN duplicado.");
                     }else {
                       alert("Error al añadir.");
                     }
@@ -637,25 +694,48 @@ function deleteuser(selected) {
 </div>
 -->
 
-<div id="reportesmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <div id="PrestamoDirectoModal"class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="z-index:10000000000000">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="LabelApartados">Reportes</h5>
+        <h5 class="modal-title" id="LabelApartados">Prestar a usuario</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">ISBN Libro</span>
+                 </div>
+                 <input id="ISBNdir" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" readonly="true">
+               </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="input-group col-12">
+               <div class="input-group mb-3">
+                 <div class="input-group-prepend">
+                   <span class="input-group-text" id="label9">CURP del usuario</span>
+                 </div>
+                 <input id="CURPUserdir" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="label9" >
+               </div>
+           </div>
+          </div>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="PrestarLibro()">Aceptrar</button>
       </div>
     </div>
   </div>
 </div>
 </div>
-
 
 <div id="pendientesmodal" class="modal fade bd-example-modal-lg" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -872,6 +952,7 @@ function deleteuser(selected) {
           <th>EXISTENCIA</th>
           <th>MODIFICAR</th>
           <th>DEVOLVER</th>
+          <th>PRESTAR</th>
       </tr>
   </thead>
   <tfoot>
@@ -882,6 +963,7 @@ function deleteuser(selected) {
         <th>EXISTENCIA</th>
         <th>MODIFICAR</th>
         <th>DEVOLVER</th>
+        <th>PRESTAR</th>
       </tr>
   </tfoot>
   </table>
