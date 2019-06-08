@@ -544,9 +544,11 @@ if ($("#ISBNdir").val() != "" && $("#CURPUserdir").val() != "") {
                                   url:   'php/apart.php', //archivo que recibe la peticion
                                   type:  'post', //método de envio
                                   success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                                                if (Number(response) == true) {
                                                   alert("Apartado correcto.");
+                                                  if (Number(response) == true) {
                                                   location.reload();
+                                                }else if (Number(response) == 3) {
+                                                  alert("Se ha excedido el limite de 3 libros.");
                                                 }else {
                                                   alert("Error en el apartado.");
                                                 }

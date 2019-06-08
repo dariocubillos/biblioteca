@@ -102,9 +102,12 @@ return($result);
 
 function ApartBook($ISBN, $usr)
 {
-  // code...
-  $result = $this->conn->query("INSERT INTO `borrowedbooks` (`IDprestamo`, `fkbook`, `fkuser`, `date`, `datedelivery`, `estate`) VALUES (NULL, '$ISBN', '$usr', CURRENT_TIMESTAMP, NULL, 'PRESTADO')");
-  $result0 = $this->conn->query("UPDATE `books` SET `Quantity` = Quantity-1 WHERE `books`.`ISBN` = '$ISBN'");
+  $result00 = $this->conn->query("SELECT * FROM `borrowedbooks` WHERE fkuser ='$usr'");
+
+if ($result00->num_rows < 4) {
+// code...
+$result = $this->conn->query("INSERT INTO `borrowedbooks` (`IDprestamo`, `fkbook`, `fkuser`, `date`, `datedelivery`, `estate`) VALUES (NULL, '$ISBN', '$usr', CURRENT_TIMESTAMP, NULL, 'PRESTADO')");
+$result0 = $this->conn->query("UPDATE `books` SET `Quantity` = Quantity-1 WHERE `books`.`ISBN` = '$ISBN'");
 
 if ($result == $result0) {
   // code...
@@ -113,6 +116,10 @@ if ($result == $result0) {
 else {
   // code...
   return false;
+}
+
+}else {
+  return 3;
 }
 
 }
