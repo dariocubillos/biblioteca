@@ -57,6 +57,10 @@ function FunctionName($usr,$pass)
 {
   $user = false;
   // code...
+
+
+  if ($usr=='ADMIN') {
+
   $result = $this->conn->query("SELECT * FROM users WHERE ID='$usr' && Pass='$pass' limit 1");
 
   if ($result->num_rows > 0) {
@@ -68,6 +72,7 @@ function FunctionName($usr,$pass)
     $user = 0;
   }
 
+}
   return $user;
 }
 

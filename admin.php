@@ -415,6 +415,9 @@ function restoredb() {
          buttons: [
              {
                  extend: 'pdfHtml5',
+                 exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              },
                  messageTop: 'Reporte libros en existencia a la fecha : '+strDate
              }
          ],
@@ -698,7 +701,7 @@ function deleteuser(selected) {
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="LabelApartados">Prestar a usuario</h5>
+        <h5 class="modal-title" id="LabelApartados">Prestar a alumno</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
