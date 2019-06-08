@@ -104,7 +104,7 @@ function ApartBook($ISBN, $usr)
 {
   $result00 = $this->conn->query("SELECT * FROM `borrowedbooks` WHERE fkuser ='$usr'");
 
-if ($result00->num_rows < 4) {
+if ($result00->num_rows < 3) {
 // code...
 $result = $this->conn->query("INSERT INTO `borrowedbooks` (`IDprestamo`, `fkbook`, `fkuser`, `date`, `datedelivery`, `estate`) VALUES (NULL, '$ISBN', '$usr', CURRENT_TIMESTAMP, NULL, 'PRESTADO')");
 $result0 = $this->conn->query("UPDATE `books` SET `Quantity` = Quantity-1 WHERE `books`.`ISBN` = '$ISBN'");
