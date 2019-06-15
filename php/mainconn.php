@@ -102,7 +102,12 @@ return($result);
 
 function ApartBook($ISBN, $usr)
 {
-  $result00 = $this->conn->query("SELECT * FROM `borrowedbooks` WHERE fkuser ='$usr'");
+
+  $result000 = $this->conn->query("SELECT * FROM users WHERE ID='$usr'");
+
+if ($result000->num_rows > 0) {
+  // code...
+ $result00 = $this->conn->query("SELECT * FROM `borrowedbooks` WHERE fkuser ='$usr'");
 
 if ($result00->num_rows < 3) {
 // code...
@@ -120,6 +125,10 @@ else {
 
 }else {
   return 3;
+}
+} else {
+  // code...
+  return 4;
 }
 
 }

@@ -549,7 +549,10 @@ if ($("#ISBNdir").val() != "" && $("#CURPUserdir").val() != "") {
                                                     location.reload();
                                                 }else if (Number(response) == 3) {
                                                   alert("Se ha excedido el limite de 3 libros.");
-                                                }else {
+                                                }else if (Number(response) == 4) {
+                                                  alert("No existe el usuario ingresado.");
+                                                }
+                                                else {
                                                   alert("Error en el apartado.");
                                                 }
                                               }
